@@ -1,10 +1,12 @@
 import axios from "axios";
 
 export const userRegister = (data) => {
+  console.log("register clicked");
+
   return async (dispatch) => {
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/josn",
       },
     };
     try {
