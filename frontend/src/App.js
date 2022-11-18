@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
+import Messenger from "./components/Messenger";
 import Register from "./components/Register";
 
 export default function App() {
@@ -9,7 +10,7 @@ export default function App() {
       <Routes>
         <Route path="/messenger/login" element={<Login />} />
         <Route path="/messenger/register" element={<Register />} />
-        <Route path="/" element={<h2> Welcome to ChatApp</h2>} />
+        <Route path="/" element={<Messenger />} />
       </Routes>
     </Router>
   );
