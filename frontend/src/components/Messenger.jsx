@@ -24,10 +24,31 @@ const Messenger = () => {
   const [newMessage, setNewMessage] = useState("");
 
   const [activeUser, setActiveUser] = useState([]);
+  const [socketMessage, setSocketMessage] = useState("");
 
   useEffect(() => {
     socket.current = io("ws://localhost:8000");
+    socket.current.on("getMessage", (data) => {
+      setSocketMessage(data);
+    });
   }, []);
+
+  useEffect(() => {
+    if (socketMessage && currentfriend) {
+      if (
+        socketMessage.senderId === currentfriend._id &&
+        socketMessage.reseverId === myInfo.id
+      ) {
+        dispatch({
+          type: "SOCKET_MESSAGE",
+          payload: {
+            message: socketMessage,
+          },
+        });
+      }
+    }
+    setSocketMessage("");
+  }, [socketMessage]);
 
   useEffect(() => {
     socket.current.emit("addUser", myInfo.id, myInfo);
@@ -51,7 +72,20 @@ const Messenger = () => {
       reseverId: currentfriend._id,
       message: newMessage ? newMessage : "❤",
     };
+
+    socket.current.emit("sendMessage", {
+      senderId: myInfo.id,
+      senderName: myInfo.userName,
+      reseverId: currentfriend._id,
+      time: new Date(),
+      message: {
+        text: newMessage ? newMessage : "❤",
+        image: "",
+      },
+    });
+
     dispatch(messageSend(data));
+    setNewMessage("");
   };
 
   console.log(currentfriend);
@@ -133,7 +167,12 @@ const Messenger = () => {
 
             <div className="active-friends">
               {activeUser && activeUser.length > 0
-                ? activeUser.map((u) => <ActiveFriend user={u} />)
+                ? activeUser.map((u) => (
+                    <ActiveFriend
+                      setCurrentFriend={setCurrentFriend}
+                      user={u}
+                    />
+                  ))
                 : ""}
             </div>
 
@@ -166,6 +205,7 @@ const Messenger = () => {
             scrollRef={scrollRef}
             emojiSend={emojiSend}
             ImageSend={ImageSend}
+            activeUser={activeUser}
           />
         ) : (
           "Please Select your Friend"
