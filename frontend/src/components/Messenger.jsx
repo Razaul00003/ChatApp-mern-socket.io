@@ -10,15 +10,20 @@ import {
   getMessage,
   ImageMessageSend,
 } from "../store/actions/messengerAction";
+
 import { io } from "socket.io-client";
 
 const Messenger = () => {
   const scrollRef = useRef();
   const socket = useRef();
 
+  const { friends, message } = useSelector((state) => state.messenger);
+  const { myInfo } = useSelector((state) => state.auth);
+
   const [currentfriend, setCurrentFriend] = useState("");
   const [newMessage, setNewMessage] = useState("");
-  const [activeUser, setActiveUser] = useState("");
+
+  const [activeUser, setActiveUser] = useState([]);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8000");
@@ -49,8 +54,7 @@ const Messenger = () => {
     dispatch(messageSend(data));
   };
 
-  const { friends, message } = useSelector((state) => state.messenger);
-  const { myInfo } = useSelector((state) => state.auth);
+  console.log(currentfriend);
 
   const dispatch = useDispatch();
   useEffect(() => {

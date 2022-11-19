@@ -1,12 +1,12 @@
 const io = require("socket.io")(8000, {
   cors: {
     origin: "*",
-    method: ["GET", "POST"],
+    methods: ["GET", "POST"],
   },
 });
 
 let users = [];
-const addUser = (userId, userInfo, socketId) => {
+const addUser = (userId, socketId, userInfo) => {
   const checkUser = users.some((u) => u.userId === userId);
 
   if (!checkUser) {
@@ -15,7 +15,7 @@ const addUser = (userId, userInfo, socketId) => {
 };
 
 io.on("connection", (socket) => {
-  console.log("socket working");
+  console.log("Socket is connecting...");
   socket.on("addUser", (userId, userInfo) => {
     addUser(userId, socket.id, userInfo);
     io.emit("getUser", users);
