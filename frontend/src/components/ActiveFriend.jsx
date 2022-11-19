@@ -1,64 +1,14 @@
 import React from "react";
 
-const ActiveFriend = () => {
+const ActiveFriend = ({ user }) => {
   return (
     <div className="active-friend">
       <div className="image-active-icon">
         <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
-          <div className="active-icon"></div>
-        </div>
-        <div className="image">
-          <img src="/image/8512ivan.jpg" alt="" />
+          <img
+            src={`/image/${user.userInfo.image}`}
+            alt={user.userInfo?.userName}
+          />
           <div className="active-icon"></div>
         </div>
       </div>
