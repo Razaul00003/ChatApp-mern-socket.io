@@ -1,21 +1,43 @@
+import React, { useEffect, useState } from "react";
 import { FaEllipsisH, FaEdit, FaSistrix } from "react-icons/fa";
 import ActiveFriend from "./ActiveFriend";
 import Friends from "./Friends";
 import RightSide from "./RightSide";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getFriends } from "../store/actions/messengerAction";
+import { getFriends, messageSend } from "../store/actions/messengerAction";
 
 const Messenger = () => {
-  const dispatch = useDispatch();
+  const [currentfriend, setCurrentFriend] = useState("");
+  const [newMessage, setNewMessage] = useState("");
+
+  const inputHendle = (e) => {
+    setNewMessage(e.target.value);
+  };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    const data = {
+      senderName: myInfo.userName,
+      reseverId: currentfriend._id,
+      message: newMessage ? newMessage : "❤",
+    };
+    dispatch(messageSend(data));
+    console.log(newMessage);
+  };
+
+  console.log(currentfriend, newMessage);
 
   const { friends } = useSelector((state) => state.messenger);
   const { myInfo } = useSelector((state) => state.auth);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getFriends());
   }, []);
+
+  useEffect(() => {
+    if (friends && friends.length > 0) setCurrentFriend(friends[0]);
+  }, [friends]);
 
   return (
     <div className="messenger">
@@ -25,7 +47,7 @@ const Messenger = () => {
             <div className="top">
               <div className="image-name">
                 <div className="image">
-                  <img src={`./image/${myInfo.image}`} alt={myInfo.userName} />
+                  <img src={`./image/${myInfo.image}`} alt="" />
                 </div>
                 <div className="name">
                   <h3>{myInfo.userName} </h3>
@@ -61,18 +83,34 @@ const Messenger = () => {
             </div>
 
             <div className="friends">
-              {/* show friend from db */}
               {friends && friends.length > 0
                 ? friends.map((fd) => (
-                    <div className="hover-friend ">
+                    <div
+                      onClick={() => setCurrentFriend(fd)}
+                      className={
+                        currentfriend._id === fd._id
+                          ? "hover-friend active"
+                          : "hover-friend"
+                      }
+                    >
                       <Friends friend={fd} />
                     </div>
                   ))
-                : "You have no friend!"}
+                : "No Friend"}
             </div>
           </div>
         </div>
-        <RightSide />
+
+        {currentfriend ? (
+          <RightSide
+            currentfriend={currentfriend}
+            inputHendle={inputHendle}
+            newMessage={newMessage}
+            sendMessage={sendMessage}
+          />
+        ) : (
+          "Please Select your Friend"
+        )}
       </div>
     </div>
   );
