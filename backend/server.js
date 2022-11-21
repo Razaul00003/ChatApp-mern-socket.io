@@ -21,13 +21,14 @@ app.use("/api/messenger", messengerRoute);
 const PORT = process.env.PORT || 5000;
 
 //-------------------------------------
-
+//----------deployment
 const __dirname1 = path.resolve();
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname1, "/frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
