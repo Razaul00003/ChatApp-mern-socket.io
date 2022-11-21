@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+const path = require("path");
 
 const databaseConnect = require("./config/database");
 const authRouter = require("./routes/authRoute");
@@ -18,9 +19,22 @@ app.use("/api/messenger", authRouter);
 app.use("/api/messenger", messengerRoute);
 
 const PORT = process.env.PORT || 5000;
-app.get("/", (req, res) => {
-  res.send("This is from backend Sever");
-});
+
+//-------------------------------------
+
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("This is from backend Sever");
+  });
+}
+//-------------------------------------
 
 databaseConnect();
 

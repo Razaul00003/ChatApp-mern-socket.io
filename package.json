@@ -1,6 +1,9 @@
 {
   "name": "messenger",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.17.6"
+  },
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -11,6 +14,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "formidable": "^2.0.1",
+    "heroku": "^7.66.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
     "nodemon": "^2.0.20",
@@ -18,7 +22,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "nodemon": "nodemon backend/server.js"
+    "nodemon": "nodemon backend/server.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
