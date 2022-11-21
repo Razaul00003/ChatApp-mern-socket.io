@@ -47,7 +47,7 @@ const Messenger = () => {
   const [typingMessage, setTypingMessage] = useState("");
 
   useEffect(() => {
-    socket.current = io("https://chat-mern-razaul.herokuapp.com/");
+    socket.current = io("https://chat-mern-razaul.herokuapp.com");
     socket.current.on("getMessage", (data) => {
       setSocketMessage(data);
     });
