@@ -274,6 +274,19 @@ const Messenger = () => {
     dispatch(getTheme());
   }, []);
 
+  const search = (e) => {
+    const getFriendClass = document.getElementsByClassName("hover-friend");
+    const frienNameClass = document.getElementsByClassName("Fd_name");
+    for (var i = 0; i < getFriendClass.length, i < frienNameClass.length; i++) {
+      let text = frienNameClass[i].innerText.toLowerCase();
+      if (text.indexOf(e.target.value.toLowerCase()) > -1) {
+        getFriendClass[i].style.display = "";
+      } else {
+        getFriendClass[i].style.display = "none";
+      }
+    }
+  };
+
   return (
     <div className={themeMood === "dark" ? "messenger theme" : "messenger"}>
       <Toaster
@@ -345,6 +358,7 @@ const Messenger = () => {
                   <FaSistrix />{" "}
                 </button>
                 <input
+                  onChange={search}
                   type="text"
                   placeholder="Search"
                   className="form-control"
