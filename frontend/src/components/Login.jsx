@@ -53,6 +53,15 @@ const Login = () => {
       <div className="card">
         <div className="card-header">
           <h3>Login</h3>
+
+          <p>
+            {" "}
+            No time to create account? use this demo credentials to view
+            features.
+          </p>
+          <span>aron@gmail.com</span>
+          <br />
+          <span>12345678</span>
         </div>
 
         <div className="card-body">
