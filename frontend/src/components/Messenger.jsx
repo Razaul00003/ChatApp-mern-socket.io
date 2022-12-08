@@ -48,7 +48,7 @@ const Messenger = () => {
   const [typingMessage, setTypingMessage] = useState("");
 
   useEffect(() => {
-    socket.current = io("http://localhost:1111");
+    socket.current = io("https://chatty-n6ij.onrender.com");
     socket.current.on("getMessage", (data) => {
       setSocketMessage(data);
     });
