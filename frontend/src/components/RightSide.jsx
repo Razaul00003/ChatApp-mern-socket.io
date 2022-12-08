@@ -1,5 +1,11 @@
-import React from "react";
-import { FaPhoneAlt, FaVideo, FaRocketchat } from "react-icons/fa";
+import React, { useState } from "react";
+import {
+  FaPhoneAlt,
+  FaVideo,
+  FaRocketchat,
+  FaUserFriends,
+  FaInfoCircle,
+} from "react-icons/fa";
 import FriendInfo from "./FriendInfo";
 import Message from "./Message";
 import MessageSend from "./MessageSend";
@@ -16,14 +22,21 @@ const RightSide = (props) => {
     ImageSend,
     activeUser,
     typingMessage,
+    showFriend,
   } = props;
 
+  const [showFriendInfo, setShowFriendInfo] = useState(false);
+  const showFriendInfoHandler = () => {
+    setShowFriendInfo(true);
+    console.log("show freind info");
+  };
+
   return (
-    <div className="col-9">
+    <div className="col-9 col-md-12 ">
       <div className="right-side">
         <input type="checkbox" id="dot" />
         <div className="row">
-          <div className="col-8">
+          <div className=" col-12 col-8">
             <div className="message-send-show">
               <div className="header">
                 <div className="image-name">
@@ -58,6 +71,23 @@ const RightSide = (props) => {
                       <FaRocketchat />{" "}
                     </label>
                   </div>
+
+                  <div
+                    className="icon d-hide-items"
+                    onClick={showFriendInfoHandler}
+                  >
+                    <label htmlFor="dot">
+                      {" "}
+                      <FaInfoCircle />{" "}
+                    </label>
+                  </div>
+
+                  <div className="icon d-hide-items" onClick={showFriend}>
+                    <label htmlFor="dot">
+                      {" "}
+                      <FaUserFriends />{" "}
+                    </label>
+                  </div>
                 </div>
               </div>
 
@@ -78,7 +108,13 @@ const RightSide = (props) => {
             </div>
           </div>
 
-          <div className="col-4">
+          <div
+            className={
+              showFriendInfo
+                ? " show-friendInfoBoard col-4 "
+                : "friendInfoBoard col-4 "
+            }
+          >
             <FriendInfo
               message={message}
               currentfriend={currentfriend}

@@ -25,6 +25,7 @@ import sendingSound from "../audio/sending.mp3";
 const Messenger = () => {
   const [notificationSPlay] = useSound(notificationSound);
   const [sendingSPlay] = useSound(sendingSound);
+  const [showFriendsBoard, setShowFriendBoard] = useState(false);
 
   const scrollRef = useRef();
   const socket = useRef();
@@ -47,7 +48,7 @@ const Messenger = () => {
   const [typingMessage, setTypingMessage] = useState("");
 
   useEffect(() => {
-    socket.current = io("https://chat-mern-razaul.herokuapp.com");
+    socket.current = io("http://localhost:1111");
     socket.current.on("getMessage", (data) => {
       setSocketMessage(data);
     });
@@ -296,6 +297,11 @@ const Messenger = () => {
     }
   };
 
+  const showFriend = () => {
+    console.log("see all firnd");
+    setShowFriendBoard(!showFriendsBoard);
+  };
+
   return (
     <div className={themeMood === "dark" ? "messenger theme" : "messenger"}>
       <Toaster
@@ -309,7 +315,13 @@ const Messenger = () => {
       />
 
       <div className="row">
-        <div className="col-3">
+        <div
+          className={
+            showFriendsBoard
+              ? "col-3 show-friendsboard "
+              : "col-3 friendsboard "
+          }
+        >
           <div className="left-side">
             <div className="top">
               <div className="image-name">
@@ -375,12 +387,16 @@ const Messenger = () => {
               </div>
             </div>
 
-            {/* <div className='active-friends'>
-     {
-        activeUser && activeUser.length > 0 ? activeUser.map(u =>  <ActiveFriend setCurrentFriend = {setCurrentFriend} user={u} />) : ''  
-     }
-                        
-               </div> */}
+            <div className="active-friends">
+              {activeUser && activeUser.length > 0
+                ? activeUser.map((u) => (
+                    <ActiveFriend
+                      setCurrentFriend={setCurrentFriend}
+                      user={u}
+                    />
+                  ))
+                : ""}
+            </div>
 
             <div className="friends">
               {friends && friends.length > 0
@@ -414,6 +430,7 @@ const Messenger = () => {
             message={message}
             scrollRef={scrollRef}
             emojiSend={emojiSend}
+            showFriend={showFriend}
             ImageSend={ImageSend}
             activeUser={activeUser}
             typingMessage={typingMessage}

@@ -75,6 +75,14 @@
           }
         }
       }
+      @media screen and (max-width: 700px) {
+        .col-12 {
+          width: 100%;
+        }
+        .d-none {
+          display: none;
+        }
+      }
     }
     #dot {
       display: none;
@@ -91,5 +99,29 @@
     #dot:checked ~ .row .col-8 .message-show .fd-message .fd-text {
       width: 500px;
     }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .col-md-12 {
+    width: 100%;
+  }
+  .friendInfoBoard {
+    display: none;
+  }
+  .show-friendInfoBoard {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 80vw !important;
+    background-color: white;
+    color: black;
+    border: 2px solid #ddd;
+    display: block;
+  }
+  .d-hide-items {
+    display: block;
   }
 }
